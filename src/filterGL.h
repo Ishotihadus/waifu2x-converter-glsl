@@ -5,7 +5,7 @@
 #include <stdint.h>
 #include <assert.h>
 
-#if defined(_WIN32)
+#if defined(_WIN32) || defined(__linux__)
 	#include <GL/glew.h>
 #elif defined(__APPLE__)
 	#include <OpenGL/gl3.h>
