@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 2.8)
 
-include(CheckCXXCompilerFlag CXX)
+include(CheckCXXCompilerFlag)
 
-project(waifu2x-converter-glsl)
+project(waifu2x-converter-glsl CXX)
 
 CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
 CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
