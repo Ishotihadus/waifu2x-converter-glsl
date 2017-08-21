@@ -1,21 +1,17 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.1.0 FATAL_ERROR)
 
 include(CheckCXXCompilerFlag)
 
 project(waifu2x-converter-glsl)
 
-CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
-CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
-if(COMPILER_SUPPORTS_CXX11)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-elseif(COMPILER_SUPPORTS_CXX0X)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
-endif()
+set(CMAKE_CXX_STANDARD 11)
 
 find_package(PkgConfig REQUIRED)
 find_package(OpenGL REQUIRED)
 find_package(GLEW REQUIRED)
 find_package(OpenCV 3 REQUIRED)
+set(THREADS_PREFER_PTHREAD_FLAG ON)
+find_package(Threads REQUIRED)
 pkg_search_module(GLFW REQUIRED glfw3)
 
 include_directories(
@@ -34,7 +30,8 @@ add_executable(waifu2x-converter-glsl
   src/modelHandlerFilterGL.cpp)
 
 target_link_libraries(waifu2x-converter-glsl
-  ${OPENGL_LIBRARIES}
+  ${OPENGL_gl_LIBRARY}
   ${GLEW_LIBRARIES}
   ${OpenCV_LIBRARIES}
-  ${GLFW_LIBRARIES})
+  ${GLFW_LIBRARIES}
+  Threads::Threads)
