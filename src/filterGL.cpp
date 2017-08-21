@@ -35,12 +35,6 @@ void filterGLInit(uint32_t width, uint32_t height)
 	//std::cout << glGetString(GL_VENDOR) << std::endl;
 	//std::cout << glGetString(GL_EXTENSIONS) << std::endl;
 	
-#ifdef __glew_h__
-	GLenum glewResult = glewInit();
-	assert(glewResult == 0);
-	glGetError();
-#endif
-	
 	glGenTextures(2, textureBuffers);
 	for (int i = 0; i < 2; i++) {
 		glBindTexture(GL_TEXTURE_2D_ARRAY, textureBuffers[i]);

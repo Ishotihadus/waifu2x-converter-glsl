@@ -5,10 +5,10 @@
 #include <stdint.h>
 #include <assert.h>
 
-#if defined(_WIN32) || defined(__linux__)
-	#include <GL/glew.h>
-#elif defined(__APPLE__)
+#if defined(__APPLE__)
 	#include <OpenGL/gl3.h>
+#else
+	#include <epoxy/gl.h>
 #endif
 
 #include <GLFW/glfw3.h>
