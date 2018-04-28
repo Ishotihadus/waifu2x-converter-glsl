@@ -1,4 +1,3 @@
-
 #include <opencv2/opencv.hpp>
 #include <iostream>
 #include <sstream>
@@ -10,6 +9,10 @@
 
 #include "modelHandler.hpp"
 #include "convertRoutine.hpp"
+
+#ifndef DEFAULT_DIR
+#define DEFAULT_DIR "."
+#endif
 
 int main(int argc, char** argv) {
 
@@ -44,12 +47,12 @@ int main(int argc, char** argv) {
 
 	TCLAP::ValueArg<std::string> cmdModelPath("", "model_dir",
 			"path to custom model directory (don't append last / )", false,
-			"models", "string", cmd);
-	
+			DEFAULT_DIR "/models", "string", cmd);
+
 	TCLAP::ValueArg<int> cmdNumberOfJobs("j", "jobs",
 			"number of threads launching at the same time (dummy command)", false, 4, "integer",
 			cmd);
-	
+
 	TCLAP::ValueArg<int> cmdBlockSize("b", "block_size",
 			"block size of split processing. default=512", false, 512, "integer",
 			cmd);
@@ -76,10 +79,10 @@ int main(int argc, char** argv) {
 
 	int blockSize = cmdBlockSize.getValue();
 	w2xc::modelUtility::getInstance().setBlockSize(cv::Size(blockSize, blockSize));
-	
+
 	// ===== Noise Reduction Phase =====
 	if (cmdMode.getValue() == "noise" || cmdMode.getValue() == "noise_scale") {
-		
+
 		std::cout << "Noise reduction (Lv." << cmdNRLevel.getValue() << ") filtering..." << std::endl;
 
 		std::string modelFileName(cmdModelPath.getValue());
@@ -200,4 +203,3 @@ int main(int argc, char** argv) {
 
 	return 0;
 }
-

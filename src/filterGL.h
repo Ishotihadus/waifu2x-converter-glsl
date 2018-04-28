@@ -5,12 +5,7 @@
 #include <stdint.h>
 #include <assert.h>
 
-#if defined(__APPLE__)
-	#include <OpenGL/gl3.h>
-#else
-	#include <epoxy/gl.h>
-#endif
-
+#define GLFW_INCLUDE_GLCOREARB
 #include <GLFW/glfw3.h>
 #include <opencv2/opencv.hpp>
 
@@ -28,7 +23,7 @@ struct Waifu2xShader
 	GLuint program;
 	GLuint a_position;
 	GLuint a_texCoord;
-	
+
 	GLuint bias;
 	GLuint weightMatrix;
 	GLuint inputTextures;
@@ -42,9 +37,9 @@ void filterGLSetInputData(cv::Mat& inputPlane);
 
 void filterGLGetOutputData(cv::Mat& outputPlane);
 
-bool filterGLProcess(Waifu2xShader& shader, 
+bool filterGLProcess(Waifu2xShader& shader,
 	int nInputPlanes, int nOutputPlanes,
-	std::vector<cv::Mat> &weightMatrices, 
+	std::vector<cv::Mat> &weightMatrices,
 	std::vector<double> &biases, int modelIndex);
 
 #endif

@@ -14,6 +14,8 @@ find_package(Threads REQUIRED)
 pkg_search_module(GLFW REQUIRED glfw3)
 pkg_search_module(EPOXY REQUIRED epoxy)
 
+add_definitions(-DDEFAULT_DIR="${CMAKE_CURRENT_SOURCE_DIR}")
+
 include_directories(
   include
   ${OpenGL_INCLUDE_DIRS}

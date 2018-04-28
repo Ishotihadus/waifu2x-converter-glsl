@@ -4,6 +4,10 @@
 #include "modelHandler.hpp"
 #include "filterGL.h"
 
+#ifndef DEFAULT_DIR
+#define DEFAULT_DIR "."
+#endif
+
 static std::string loadFile(const char *path);
 
 static bool loadShader(const char *preDefine, const char *vsPath, const char *fsPath, GLuint *prog);
@@ -15,7 +19,7 @@ bool w2xc::Model::loadGLShader()
 	preDefine << "#define NUM_INPUT_PLANES	" << getNInputPlanes() << std::endl;
 	preDefine << "#define NUM_OUTPUT_PLANES	" << getNOutputPlanes() << std::endl;
 
-	if (!loadShader(preDefine.str().c_str(), "shaders/waifu2x_vs.glsl", "shaders/waifu2x_fs.glsl", &shader.program)) {
+	if (!loadShader(preDefine.str().c_str(), DEFAULT_DIR "/shaders/waifu2x_vs.glsl", DEFAULT_DIR "/shaders/waifu2x_fs.glsl", &shader.program)) {
 		std::cout << "GL shader compile error." << std::endl;
 		return false;
 	}
@@ -51,7 +55,7 @@ static bool loadFile(const char *path, std::string& outstr)
 static bool loadShader(const char *preCode, const char *vsPath, const char *fsPath, GLuint *prog)
 {
 	std::string vsCode, fsCode;
-	
+
 	// Loading shader code
 	if (!loadFile(vsPath, vsCode)) return false;
 	if (!loadFile(fsPath, fsCode)) return false;
@@ -62,9 +66,9 @@ static bool loadShader(const char *preCode, const char *vsPath, const char *fsPa
 
 	const char *vsCodePtr[2] = {preCode, vsCode.c_str()};
 	const char *fsCodePtr[2] = {preCode, fsCode.c_str()};
-	
+
 	GLint linked = 0, compiled = 0;
-	
+
 	// Compiling vertex shader
 	glShaderSource(vsh, 2, vsCodePtr, 0);
 	glCompileShader(vsh);
@@ -98,7 +102,7 @@ static bool loadShader(const char *preCode, const char *vsPath, const char *fsPa
 
 	glDeleteShader(vsh);
 	glDeleteShader(fsh);
-	
+
 	glGetProgramiv(*prog, GL_LINK_STATUS, &linked);
 	if (linked == GL_FALSE) {
 		glDeleteProgram(*prog);
