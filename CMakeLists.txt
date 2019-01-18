@@ -5,15 +5,17 @@ include(CheckCXXCompilerFlag)
 project(waifu2x-converter-glsl)
 
 set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_COMPILER g++)
 
 find_package(PkgConfig REQUIRED)
 find_package(OpenGL REQUIRED)
-find_package(OpenCV 3 REQUIRED)
+find_package(OpenCV REQUIRED)
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 pkg_search_module(GLFW REQUIRED glfw3)
 pkg_search_module(EPOXY REQUIRED epoxy)
 
+add_definitions(-DGL_SILENCE_DEPRECATION=1)
 add_definitions(-DDEFAULT_DIR="${CMAKE_CURRENT_SOURCE_DIR}")
 
 include_directories(
